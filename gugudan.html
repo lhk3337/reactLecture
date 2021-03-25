@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>곱하기</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16.7.0/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <script type="text/babel">
+        class Gugudan extends React.Component {
+          constructor(props) {
+            super(props);
+            this.state = {
+              number1: "",
+              number2: "",
+              result: "",
+            };
+          }
+          render() {
+            const { number1, number2, result } = this.state;
+            return (
+              <div>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (number1) {
+                      if (number2) {
+                        this.setState({
+                          result: number1 * number2,
+                        });
+                      } else {
+                        this.setState({ result: "두번째 값 입력하세요" });
+                      }
+                    } else {
+                      this.setState({ result: "첫번째 값 입력하세요" });
+                    }
+                  }}
+                >
+                  <input
+                    type="number"
+                    value={number1}
+                    onChange={(e) => this.setState({ number1: e.target.value })}
+                  />
+                  ×
+                  <input
+                    type="number"
+                    value={number2}
+                    onChange={(e) => this.setState({ number2: e.target.value })}
+                  />
+                  <button>실행</button>
+                </form>
+                <span>{this.state.result}</span>
+              </div>
+            );
+          }
+        }
+      </script>
+
+      <script type="text/babel">
+        ReactDOM.render(<Gugudan />, document.querySelector("#root"));
+      </script>
+    </div>
+  </body>
+</html>
