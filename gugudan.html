@@ -30,17 +30,22 @@
           }
 
           onChange = (e) => {
+            //이 메서드는 화살표 함수를 써야 한다.
             this.setState({ value: e.target.value });
           };
           onSubmit = (e) => {
             const { value, first, second } = this.state;
             e.preventDefault();
             if (parseInt(value) === first * second) {
-              this.setState({
-                result: `${first * second} 정답`,
-                first: Math.ceil(Math.random() * 9),
-                second: Math.ceil(Math.random() * 9),
-                value: "",
+              this.setState((prevState) => {
+                //매개변수 prevState는 전단계의 state, setState안에 this.state가 있으면 setState는 함수형태로 바꾼다.
+                console.log(prevState);
+                return {
+                  result: `정답 : ${prevState.value}`,
+                  first: Math.ceil(Math.random() * 9),
+                  second: Math.ceil(Math.random() * 9),
+                  value: "",
+                };
               });
             } else {
               this.setState({
@@ -55,7 +60,8 @@
           render() {
             const { first, second, value, result } = this.state;
             return (
-              <div>
+              <React.Fragment>
+                {/* <React.Fragment> === <> */}
                 <div>
                   {first} 곱하기 {second}는?
                 </div>
@@ -64,7 +70,8 @@
                   <button>입력!</button>
                 </form>
                 <div>{result}</div>
-              </div>
+                {/* <React.Fragment> === </> */}
+              </React.Fragment>
             );
           }
         }
