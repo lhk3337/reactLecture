@@ -7,12 +7,13 @@
     <title>Document</title>
     <script crossorigin src="./react/react.js"></script>
     <script crossorigin src="./react/react-dom.js"></script>
+    <script src="./react/babel.js"></script>
   </head>
   <body>
     <div id="root">
       <!-- 실제로 만듦, 결과 : <div id="root"><button>Like</button></div>-->
-      <script>
-        const e = React.createElement;
+      <script type="text/babel">
+        // const e = React.createElement;
         class LikeButton extends React.Component {
           constructor(props) {
             super(props);
@@ -21,22 +22,42 @@
             };
           }
           render() {
-            return e(
-              "button",
-              {
-                onClick: () => {
+            return (
+              <button
+                type="submit"
+                onClick={() => {
                   this.setState({ liked: true });
-                },
-                type: "submit",
-              },
-              this.state.liked === true ? "Liked" : "Like"
+                }}
+              >
+                {this.state.liked === true ? this.props.like : "Liked"}
+              </button>
+              //JSX ( JS + XML )
             );
+            // return e(
+            //   "button",
+            //   {
+            //     onClick: () => {
+            //       this.setState({ liked: true });
+            //     },
+            //     type: "submit",
+            //   },
+            //   this.state.liked === true ? "Liked" : "Like"
+            // );
             //<button onClick="()=>{console.log('clicked')}" type="submit">Like</button>을 만들겠다.
           }
         }
       </script>
-      <script>
-        ReactDOM.render(e(LikeButton), document.querySelector("#root"));
+      <script type="text/babel">
+        ReactDOM.render(
+          <div>
+            <LikeButton like="Hello" />
+            <LikeButton like="Hi" />
+            <LikeButton like="Good moring" />
+            <LikeButton like="Good evening" />
+            <LikeButton like="Good afternoon" />
+          </div>,
+          document.querySelector("#root")
+        );
       </script>
     </div>
   </body>
