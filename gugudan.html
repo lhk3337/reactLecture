@@ -47,6 +47,7 @@
                   value: "",
                 };
               });
+              this.potato.focus(); // === document.querySelector(input).focus();
             } else {
               this.setState({
                 result: `${value} 땡!`,
@@ -54,8 +55,12 @@
                 second: second,
                 value: "",
               });
+              this.potato.focus(); // === document.querySelector(input).focus();
             }
           };
+
+          potato;
+          //class에 potato선언, input 태그에 ref={(c) => (this.potato = c)} , onSubmit에 this.potato.focus(); // === document.querySelector(input).focus();
 
           render() {
             const { first, second, value, result } = this.state;
@@ -66,7 +71,16 @@
                   {first} 곱하기 {second}는?
                 </div>
                 <form onSubmit={this.onSubmit}>
-                  <input type="number" value={value} onChange={this.onChange} />
+                  <input
+                    ref={(c) => {
+                      //값을 입력할때마다 input.focus()를 넣고 싶을때
+                      console.log(c); // <input type="number" value="" /> 즉 자기 자신 태그 출력
+                      this.potato = c;
+                    }}
+                    type="number"
+                    value={value}
+                    onChange={this.onChange}
+                  />
                   <button>입력!</button>
                 </form>
                 <div>{result}</div>
