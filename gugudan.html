@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16.7.0/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <script type="text/babel">
+        class Gugudan extends React.Component {
+          constructor(props) {
+            super(props);
+            this.state = {
+              first: Math.ceil(Math.random() * 9),
+              second: Math.ceil(Math.random() * 9),
+              value: "",
+              result: "",
+            };
+          }
+
+          onChange = (e) => {
+            this.setState({ value: e.target.value });
+          };
+          onSubmit = (e) => {
+            const { value, first, second } = this.state;
+            e.preventDefault();
+            if (parseInt(value) === first * second) {
+              this.setState({
+                result: `${first * second} 정답`,
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                value: "",
+              });
+            } else {
+              this.setState({
+                result: `${value} 땡!`,
+                first: first,
+                second: second,
+                value: "",
+              });
+            }
+          };
+
+          render() {
+            const { first, second, value, result } = this.state;
+            return (
+              <div>
+                <div>
+                  {first} 곱하기 {second}는?
+                </div>
+                <form onSubmit={this.onSubmit}>
+                  <input type="number" value={value} onChange={this.onChange} />
+                  <button>입력!</button>
+                </form>
+                <div>{result}</div>
+              </div>
+            );
+          }
+        }
+      </script>
+      <script type="text/babel">
+        ReactDOM.render(<Gugudan />, document.querySelector("#root"));
+      </script>
+    </div>
+  </body>
+</html>
