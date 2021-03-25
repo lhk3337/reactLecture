@@ -27,40 +27,48 @@
               result: "",
             };
           }
+
+          onSubmit = (e) => {
+            const { number1, number2 } = this.state;
+            e.preventDefault();
+            if (number1) {
+              if (number2) {
+                this.setState({
+                  result: number1 * number2,
+                });
+              } else {
+                this.setState({ result: "두번째 값 입력하세요" });
+              }
+            } else {
+              this.setState({ result: "첫번째 값 입력하세요" });
+            }
+          };
+          onChangeFirst = (e) => {
+            this.setState({ number1: e.target.value });
+          };
+          onChangeSecond = (e) => {
+            this.setState({ number2: e.target.value });
+          };
+
           render() {
             const { number1, number2, result } = this.state;
             return (
               <div>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (number1) {
-                      if (number2) {
-                        this.setState({
-                          result: number1 * number2,
-                        });
-                      } else {
-                        this.setState({ result: "두번째 값 입력하세요" });
-                      }
-                    } else {
-                      this.setState({ result: "첫번째 값 입력하세요" });
-                    }
-                  }}
-                >
+                <form onSubmit={this.onSubmit}>
                   <input
                     type="number"
                     value={number1}
-                    onChange={(e) => this.setState({ number1: e.target.value })}
+                    onChange={this.onChangeFirst}
                   />
                   ×
                   <input
                     type="number"
                     value={number2}
-                    onChange={(e) => this.setState({ number2: e.target.value })}
+                    onChange={this.onChangeSecond}
                   />
                   <button>실행</button>
                 </form>
-                <span>{this.state.result}</span>
+                <span>{result}</span>
               </div>
             );
           }
