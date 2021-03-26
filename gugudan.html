@@ -7,96 +7,71 @@
     <title>Document</title>
     <script
       crossorigin
-      src="https://unpkg.com/react@16.7.0/umd/react.development.js"
+      src="https://unpkg.com/react@16.7.0-alpha.0/umd/react.development.js"
     ></script>
     <script
       crossorigin
-      src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.development.js"
+      src="https://unpkg.com/react-dom@16.7.0-alpha.0/umd/react-dom.development.js"
     ></script>
     <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
   </head>
   <body>
-    <div id="root">
-      <script type="text/babel">
-        class Gugudan extends React.Component {
-          constructor(props) {
-            super(props);
-            this.state = {
-              first: Math.ceil(Math.random() * 9),
-              second: Math.ceil(Math.random() * 9),
-              value: "",
-              result: "",
-            };
+    <div id="root"></div>
+    <script type="text/babel">
+      const GuGuDan = () => {
+        //function component
+        //함수형 컨포넌트는 setState나 ref를 사용하지 않을때 사용했었다.
+
+        const [first, setFirst] = React.useState(Math.ceil(Math.random() * 9));
+        const [second, setSecond] = React.useState(
+          Math.ceil(Math.random() * 9)
+        );
+        const [value, setValue] = React.useState("");
+        const [result, setResult] = React.useState("");
+        const inputRef = React.useRef(null); //hooks에서 ref 쓰는 방법
+
+        const onChange = (e) => {
+          setValue(e.target.value);
+        };
+
+        const onSubmit = (e) => {
+          e.preventDefault();
+          if (parseInt(value) === first * second) {
+            setResult(`정답 : ${value}`);
+            setFirst(Math.ceil(Math.random() * 9));
+            setSecond(Math.ceil(Math.random() * 9));
+            setValue("");
+            inputRef.current.focus();
+          } else {
+            setResult(`${value} 땡!`);
+            setFirst(first);
+            setSecond(second);
+            setValue("");
+            inputRef.current.focus();
           }
+        };
 
-          onChange = (e) => {
-            //이 메서드는 화살표 함수를 써야 한다.
-            this.setState({ value: e.target.value });
-          };
-          onSubmit = (e) => {
-            const { value, first, second } = this.state;
-            e.preventDefault();
-            if (parseInt(value) === first * second) {
-              this.setState((prevState) => {
-                //매개변수 prevState는 전단계의 state, setState안에 this.state가 있으면 setState는 함수형태로 바꾼다.
-                console.log(prevState);
-                return {
-                  result: `정답 : ${prevState.value}`,
-                  first: Math.ceil(Math.random() * 9),
-                  second: Math.ceil(Math.random() * 9),
-                  value: "",
-                };
-              });
-              this.input.focus(); // === document.querySelector(input).focus();
-            } else {
-              this.setState({
-                result: `${value} 땡!`,
-                first: first,
-                second: second,
-                value: "",
-              });
-              this.input.focus(); // === document.querySelector(input).focus();
-            }
-          };
-
-          input;
-          //class에 potato선언, input 태그에 ref={(c) => (this.input = c)} , onSubmit에 this.input.focus(); // === document.querySelector(input).focus();
-
-          onRefInput = (c) => {
-            this.input = c;
-            console.log(c); // <input type="number" value="" /> 즉 자기 자신 태그 출력
-          };
-
-          render() {
-            const { first, second, value, result } = this.state;
-            return (
-              <React.Fragment>
-                {/* <React.Fragment> === <> */}
-                <div>
-                  {first} 곱하기 {second}는?
-                </div>
-                <form onSubmit={this.onSubmit}>
-                  <input
-                    ref={
-                      this.onRefInput
-                      //값을 입력할때마다 input.focus()를 넣고 싶을때
-                    }
-                    type="number"
-                    value={value}
-                    onChange={this.onChange}
-                  />
-                  <button>입력!</button>
-                </form>
-                <div>{result}</div>
-                {/* <React.Fragment> === </> */}
-              </React.Fragment>
-            );
-          }
-        }
-      </script>
-      <script type="text/babel">
-        ReactDOM.render(<Gugudan />, document.querySelector("#root"));
-      </script>
-    </div>
+        return (
+          <React.Fragment>
+            <div>
+              {first} 곱하기 {second}
+            </div>
+            <form onSubmit={onSubmit}>
+              <input
+                type="number"
+                ref={inputRef}
+                value={value}
+                onChange={onChange}
+              />
+              <button>입력!</button>
+            </form>
+            <div>{result}</div>
+          </React.Fragment>
+        );
+      };
+    </script>
+    <script type="text/babel">
+      ReactDOM.render(<GuGuDan />, document.querySelector("#root"));
+    </script>
   </body>
 </html>
