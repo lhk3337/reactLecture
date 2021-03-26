@@ -36,7 +36,7 @@
         const onSubmit = (e) => {
           e.preventDefault();
           if (parseInt(value) === first * second) {
-            //hooks의 setState는 setState를 하나하나 렌더링하지 않고 모아서 한번에 처리한다.
+            //hooks의 setState는 setState를 하나하나 렌더링하지 않고 리액트가 알아서 한번에 처리한다.(비동기)
             setResult((prevResult) => {
               //매개변수 prevResult는 전단계의 Result
               return `정답 : ${value}`;
@@ -53,7 +53,7 @@
             inputRef.current.focus();
           }
         };
-        cosole.log("렌더링");
+        console.log("렌더링"); // input태그에 입력하면 렌더링이 입력한 만큼 발생 되지만 입력 버튼을 누르면 한번만(setState부분) 렌더링이 발생한다.
         const onChange = (e) => {
           setValue(e.target.value);
         };
