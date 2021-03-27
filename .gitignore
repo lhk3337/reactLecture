@@ -1,3 +1,4 @@
 .DS_STORE
-lecture/node_modules
-lecture/build/
+webpackReacts/webpackInit/node_modules
+webpackReacts/webpackInit/build/
+webpackReacts/Gugudan

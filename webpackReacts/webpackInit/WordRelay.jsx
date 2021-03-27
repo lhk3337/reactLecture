@@ -3,7 +3,7 @@ const { Component } = React;
 class WordRelay extends Component {
   state = { text: "Hello React" };
   render() {
-    return <h1>{this.state.text}</h1>;
+    return <>{this.state.text}</>;
   }
 }
 module.exports = WordRelay;
