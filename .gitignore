@@ -1,4 +1,6 @@
 .DS_STORE
 webpackReacts/webpackInit/node_modules
 webpackReacts/webpackInit/build/
-webpackReacts/Gugudan
+webpackReacts/Gugudan/node_modules
+webpackReacts/Gugudan/build
+
