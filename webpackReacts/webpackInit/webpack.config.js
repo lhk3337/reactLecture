@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const RefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 module.exports = {
   name: "wordrelay-setting",
@@ -35,7 +36,10 @@ module.exports = {
             ],
             "@babel/preset-react",
           ], //presets는 plugin의 모임
-          plugins: ["@babel/plugin-proposal-class-properties"],
+          plugins: [
+            "@babel/plugin-proposal-class-properties",
+            "react-refresh/babel",
+          ],
         },
       },
     ],
@@ -43,10 +47,16 @@ module.exports = {
   plugins: [
     //여기에 사용할 플러그인을 나열한다.
     new webpack.LoaderOptionsPlugin({ debug: true }), //로더 옵션을 debug로 모두 설정
+    new RefreshWebpackPlugin(),
   ],
   output: {
     //entry에서 설정된 파일을 webpack으로 통해 통합된 파일 출력 (출력)
     path: path.join(__dirname, "dist"), //__dirname : 현재폴더,
     filename: "app.js",
+    publicPath: "/dist/",
   }, //출력
+  devServer: {
+    publicPath: "/dist/",
+    hot: true,
+  },
 };
